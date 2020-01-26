@@ -5,12 +5,15 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node dist/index.js"
+    "start": "nodemon",
+    "start:prod": "node dist/index.js"
   },
   "devDependencies": {
+    "nodemon": "^2.0.2",
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "apollo-datasource-rest": "^0.6.11",
     "apollo-server": "^2.9.16",
     "graphql": "^14.5.8"
   }
