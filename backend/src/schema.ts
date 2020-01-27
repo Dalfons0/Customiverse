@@ -2,8 +2,15 @@ import { gql } from 'apollo-server';
 
 const typeDefs = gql`
   type Query {
-    popular: [Thing]
+    popular(page: Int, perPage: Int): PaginatedThings
     thing(id: ID!): Thing
+  }
+
+  type PaginatedThings {
+    page: Int!
+    perPage: Int!
+    result: [Thing]
+    hasMore: Boolean!
   }
 
   type Thing {
@@ -14,6 +21,10 @@ const typeDefs = gql`
     is_private: Boolean!
     is_purchased: Boolean!
     is_published: Boolean!
+    like_count: Int
+    collect_count: Int
+    added: String
+    description: String
   }
 
   type Creator {

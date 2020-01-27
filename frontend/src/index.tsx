@@ -4,8 +4,7 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import PopularThings from './page/popular-things';
+import IsLoggedIn from './components/logged-in';
 
 const cache = new InMemoryCache();
 
@@ -14,14 +13,20 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   link: new HttpLink({
     uri: 'http://localhost:4000/graphql',
     headers: {
-      authorization: '',
+      authorization: localStorage.getItem('token'),
     },
   }),
 });
 
+cache.writeData({
+  data: {
+    isLoggedIn: !!localStorage.getItem('token'),
+  },
+});
+
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <PopularThings />
+    <IsLoggedIn />
   </ApolloProvider>,
   document.getElementById('root'),
 );

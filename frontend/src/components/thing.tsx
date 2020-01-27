@@ -1,5 +1,6 @@
 import { Avatar, Button, Card, CardActions, CardHeader, CardMedia, createStyles, makeStyles } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -7,7 +8,7 @@ const useStyles = makeStyles(() =>
       width: 296,
       height: 320,
       display: 'inline-block',
-      marginBottom: 20,
+      margin: 5,
     },
     media: {
       height: 219,
@@ -20,8 +21,9 @@ const useStyles = makeStyles(() =>
 
 export default function Thing({ thing }: any) {
   const classes = useStyles();
+  const history = useHistory();
 
-  const { name, thumbnail, creator } = thing;
+  const { id, name, thumbnail, creator } = thing;
 
   return (
     <Card className={classes.card}>
@@ -33,7 +35,7 @@ export default function Thing({ thing }: any) {
       />
       <CardMedia className={classes.media} image={thumbnail} title={name} />
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={() => history.push(`/thing/${id}`)}>
           View
         </Button>
       </CardActions>
