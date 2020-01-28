@@ -7,14 +7,19 @@ import ErrorDialog from '../components/error-dialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    thingContainer: {
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
       padding: '20px 20px 0',
-      width: 1080,
+      maxWidth: 1080,
+    },
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
     gridList: {
       width: 500,
@@ -43,6 +48,13 @@ export const GET_POPULAR = gql`
 
 export default function Things() {
   const classes = useStyles();
+
+  const { data, loading, error, fetchMore } = useQuery(GET_POPULAR);
+
+  if (loading) return <LinearProgress />;
+  if (error) return <ErrorDialog message={error.message} />;
+
+  const { page, result, hasMore } = data!.popular;
   const loadMoreThings: any = () =>
     fetchMore({
       variables: { page: page + 1 },
@@ -58,24 +70,18 @@ export default function Things() {
         };
       },
     });
-
-  const { data, loading, error, fetchMore } = useQuery(GET_POPULAR);
-
-  if (loading) return <LinearProgress />;
-  if (error) return <ErrorDialog message={error.message} />;
-
-  const { page, result, hasMore } = data;
   return (
     <div className={classes.root}>
-      {result!.popular!.map((thing: any) => (
-        <Thing key={thing.id} thing={thing} />
-      ))}
-      {result &&
-        hasMore(
-          <Button size="large" onClick={loadMoreThings}>
-            Load More
-          </Button>,
-        )}
+      <div className={classes.thingContainer}>
+        {result!.map((thing: any) => (
+          <Thing key={thing.id} thing={thing} />
+        ))}
+      </div>
+      {hasMore && (
+        <Button fullWidth variant="contained" color="primary" size="large" onClick={loadMoreThings}>
+          Load More
+        </Button>
+      )}
     </div>
   );
 }

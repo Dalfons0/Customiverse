@@ -6,6 +6,10 @@ const typeDefs = gql`
     thing(id: ID!): Thing
   }
 
+  type Mutation {
+    login(user: String, pass: String): String # login token
+  }
+
   type PaginatedThings {
     page: Int!
     perPage: Int!

@@ -9,9 +9,10 @@ const useStyles = makeStyles(() =>
       height: 320,
       display: 'inline-block',
       margin: 5,
+      cursor: 'pointer',
     },
     media: {
-      height: 219,
+      height: '85%',
     },
     header: {
       padding: 8,
@@ -26,7 +27,7 @@ export default function Thing({ thing }: any) {
   const { id, name, thumbnail, creator } = thing;
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} onClick={() => history.push(`/thing/${id}`)}>
       <CardHeader
         className={classes.header}
         avatar={<Avatar alt={creator.name} src={creator.thumbnail} />}
@@ -34,11 +35,6 @@ export default function Thing({ thing }: any) {
         subheader={`by: ${creator.name}`}
       />
       <CardMedia className={classes.media} image={thumbnail} title={name} />
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => history.push(`/thing/${id}`)}>
-          View
-        </Button>
-      </CardActions>
     </Card>
   );
 }
