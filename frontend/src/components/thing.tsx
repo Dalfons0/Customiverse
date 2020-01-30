@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, CardActions, CardHeader, CardMedia, createStyles, makeStyles } from '@material-ui/core';
+import { Avatar, Card, CardHeader, CardMedia, createStyles, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -20,7 +20,16 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-export default function Thing({ thing }: any) {
+interface ThingProps {
+  thing: {
+    id: string;
+    name: string;
+    thumbnail: string;
+    creator: {name: string, thumbnail: string}; 
+  }
+}
+
+export default function Thing({ thing }: ThingProps) {
   const classes = useStyles();
   const history = useHistory();
 

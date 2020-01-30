@@ -1,9 +1,10 @@
-import { ApolloContext, ApolloResolvers } from './model';
+import { IResolvers } from 'apollo-server';
+import { Thing } from './model';
 
-const resolvers: ApolloResolvers = {
+const resolvers: IResolvers = {
   Query: {
     popular: async (_, { page = 1, perPage = 12 }, { dataSources }) => {
-      const things: any[] = await dataSources.thingAPI.getPopularThings({ page, perPage });
+      const things: Thing[] = await dataSources.thingAPI.getPopularThings({ page, perPage });
 
       return { page, perPage, result: things.slice(0, perPage), hasMore: things!.length > perPage };
     },

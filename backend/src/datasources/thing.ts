@@ -1,5 +1,5 @@
-import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
-import { Pagination, ID, Thing, Image, ResponseThing, DefaultImage } from 'src/model';
+import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
+import { DefaultImage, ID, Image, Pagination, ResponseThing, Thing } from 'src/model';
 
 enum IMAGE_TYPES {
   thumb = 'thumb',
@@ -22,23 +22,28 @@ export default class ThingAPI extends RESTDataSource {
     this.baseURL = 'https://api.thingiverse.com/';
   }
 
-  willSendRequest(request: RequestOptions) {
+  public willSendRequest(request: RequestOptions) {
     request.headers.set('Authorization', this.context.token);
   }
 
-  async getPopularThings({ page, perPage }: Pagination): Promise<Thing[]> {
+  public async getPopularThings({ page, perPage }: Pagination): Promise<Thing[]> {
     // Adding +1 to the page elements to know if there are more pages to fullfill
-    const thingsParams = { sort: 'popular', page: page, per_page: perPage + 1 };
+    const thingsParams = { sort: 'popular', page, per_page: perPage + 1 };
     return this.get('search/things', thingsParams);
   }
 
-  async getThingById({ thingId }: ID): Promise<Thing> {
+  public async getThingById({ thingId }: ID): Promise<Thing> {
     const thing = await this.get<ResponseThing>(`things/${thingId}`);
 
     return this.mapThing(thing, thing.default_image, IMAGE_SIZES.featured, IMAGE_TYPES.preview);
   }
 
-  private async mapThing(thing: ResponseThing, defaultImage?: DefaultImage, imageSize: IMAGE_SIZES = IMAGE_SIZES.medium, imageType: IMAGE_TYPES = IMAGE_TYPES.preview): Promise<Thing> {
+  private async mapThing(
+    thing: ResponseThing,
+    defaultImage?: DefaultImage,
+    imageSize: IMAGE_SIZES = IMAGE_SIZES.medium,
+    imageType: IMAGE_TYPES = IMAGE_TYPES.preview,
+  ): Promise<Thing> {
     return {
       id: thing.id,
       name: thing.name,
@@ -54,7 +59,7 @@ export default class ThingAPI extends RESTDataSource {
     };
   }
 
-  private findImageUrl({ sizes }: DefaultImage, imageType: IMAGE_TYPES, imageSize: IMAGE_SIZES): string | undefined{
+  private findImageUrl({ sizes }: DefaultImage, imageType: IMAGE_TYPES, imageSize: IMAGE_SIZES): string | undefined {
     const result = sizes && sizes.find(image => image.type === imageType && image.size === imageSize);
     return result && result.url;
   }

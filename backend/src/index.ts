@@ -1,7 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server';
-import typeDefs from './schema';
-import resolvers from './resolvers';
 import ThingAPI from './datasources/thing';
+import resolvers from './resolvers';
+import typeDefs from './schema';
 
 const server = new ApolloServer({
   context: async ({ req }) => ({ token: req.headers.authorization }),
@@ -11,5 +11,6 @@ const server = new ApolloServer({
 });
 
 server.listen().then(({ url }) => {
+  // tslint:disable-next-line
   console.log(`🚀  Server ready at ${url}`);
 });

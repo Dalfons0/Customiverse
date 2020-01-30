@@ -5,7 +5,7 @@ export interface Pagination {
   perPage: number;
 }
 
-export interface PopularResponse extends Pagination{
+export interface PopularResponse extends Pagination {
   result: Thing[];
   hasMore: boolean;
 }
@@ -24,7 +24,7 @@ export interface Thing {
   description: string;
 }
 
-export interface ResponseThing extends Thing{
+export interface ResponseThing extends Thing {
   default_image?: DefaultImage;
 }
 
@@ -34,9 +34,8 @@ export interface DefaultImage {
   sizes?: Image[];
 }
 
-export interface Image { 
+export interface Image {
   size: string;
   type: string;
   url: string;
 }
-

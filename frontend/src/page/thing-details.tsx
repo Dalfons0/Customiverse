@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardMedia,
   CardActions,
-  Button,
   Typography,
   CardContent,
   Chip,
@@ -39,7 +38,7 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-const GET_THING_DETAILS = gql`
+export const GET_THING_DETAILS = gql`
   query ThingDetails($thingId: ID!) {
     thing(id: $thingId) {
       name
@@ -64,7 +63,7 @@ export default function ThingDetails() {
 
   if (loading) return <LinearProgress />;
   if (error) return <ErrorDialog message={error.message} />;
-  if (!data!.thing) return <ErrorDialog message={`Thing whith id ${thingId} not found`} />;
+  if (!data || !data.thing) return <ErrorDialog message={`Thing whith id ${thingId} not found`} />;
 
   const { name, thumbnail, creator, description, added, like_count, collect_count } = data.thing;
 

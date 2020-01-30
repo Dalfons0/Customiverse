@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Pages from '../page';
 import Login from '../page/login';
 
-const IS_LOGGED_IN = gql`
+export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }
@@ -12,5 +12,5 @@ const IS_LOGGED_IN = gql`
 
 export default function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
-  return data!.isLoggedIn ? <Pages /> : <Login />;
+  return data.isLoggedIn ? <Pages /> : <Login />;
 }

@@ -7,7 +7,7 @@ export interface ApolloResolvers {
 
 export interface Query {
   popular: (source?: object, args?: any, context?: any) => Promise<PopularResponse>;
-  thing: (source?: object, args?: any, context?: any) => Promise<Thing>
+  thing: (source?: object, args?: any, context?: any) => Promise<Thing>;
 }
 
 export interface Mutation {
