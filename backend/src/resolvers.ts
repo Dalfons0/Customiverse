@@ -1,6 +1,6 @@
-import { IResolvers } from 'apollo-server';
+import { ApolloContext, ApolloResolvers } from './model';
 
-const resolvers: IResolvers = {
+const resolvers: ApolloResolvers = {
   Query: {
     popular: async (_, { page = 1, perPage = 12 }, { dataSources }) => {
       const things: any[] = await dataSources.thingAPI.getPopularThings({ page, perPage });
@@ -10,7 +10,7 @@ const resolvers: IResolvers = {
     thing: async (_, { id }, { dataSources }) => dataSources.thingAPI.getThingById({ thingId: id }),
   },
   Mutation: {
-    login: async (_, __, { dataSources }) => process.env.ACCESS_TOKEN || 'missing_token',
+    login: async () => process.env.ACCESS_TOKEN || 'missing_token',
   },
 };
 
