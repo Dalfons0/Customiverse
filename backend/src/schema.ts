@@ -7,7 +7,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    login(user: String, pass: String): String # login token
+    login(code: String): String # login token
   }
 
   type PaginatedThings {

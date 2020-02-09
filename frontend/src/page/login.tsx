@@ -7,8 +7,8 @@ import ErrorDialog from '../components/error-dialog';
 import { LinearProgress } from '@material-ui/core';
 
 export const LOGIN_USER = gql`
-  mutation login($user: String!, $pass: String!) {
-    login(user: $user, pass: $pass)
+  mutation login($code: String!) {
+    login(code: $code)
   }
 `;
 

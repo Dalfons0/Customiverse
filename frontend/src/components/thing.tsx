@@ -36,7 +36,7 @@ export default function Thing({ thing }: ThingProps) {
   const { id, name, thumbnail, creator } = thing;
 
   return (
-    <Card className={classes.card} onClick={() => history.push(`/thing/${id}`)}>
+    <Card className={classes.card} onClick={() => history.push(`/things/${id}`)}>
       <CardHeader
         className={classes.header}
         avatar={<Avatar alt={creator.name} src={creator.thumbnail} />}

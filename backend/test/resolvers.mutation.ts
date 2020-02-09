@@ -1,18 +1,26 @@
-import { should, use } from "chai";
-import resolvers from "../src/resolvers";
-use(require("chai-as-promised"));
+import { should, use } from 'chai';
+import sinon from 'sinon';
+import resolvers from '../src/resolvers';
+use(require('chai-as-promised'));
 should();
 
-describe("[Mutation.login]", () => {
+interface Mutation {
+  login: (source?: object, args?: object, context?: object) => Promise<string>;
+}
 
-  it("should retun a token if the ACCES_TOKEN vaiable is setted", () => {
-    const token = "this_is_a_token";
-    process.env.ACCESS_TOKEN = token;
-    return resolvers.Mutation.login().should.eventually.equal(token);
-  });
+const testContext = {
+  dataSources: {
+    authAPI: {
+      getAccessToken: sinon.fake(),
+    },
+  },
+};
 
-  it("should retun an empty string if the ACCES_TOKEN is not defined", () => {
-    process.env.ACCESS_TOKEN = "";
-    return resolvers.Mutation.login().should.eventually.equal("missing_token");
+describe('[Mutation.login]', () => {
+  it('should retun a token if the code is valid', () => {
+    const token = 'this_is_a_token';
+    testContext.dataSources.authAPI.getAccessToken = sinon.fake.returns(token);
+
+    return (resolvers.Mutation as Mutation).login(undefined, { code: 'valid_code' }, testContext).should.eventually.equal(token);
   });
 });

@@ -1,5 +1,9 @@
 Client side using Apollo Client, to interact with the api of thingiverse.
 
+## Config
+
+To properly interact with the api, you have to be registered in the [thingiverse](https://www.thingiverse.com) and [have an app registered](https://www.thingiverse.com/apps/create/), after this, you will need to set the client id as an environment variable named `REACT_APP_CLIENT_ID`.
+
 ## Available Scripts
 
 In the project directory, you can run:

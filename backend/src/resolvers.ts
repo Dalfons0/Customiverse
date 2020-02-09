@@ -11,7 +11,7 @@ const resolvers: IResolvers = {
     thing: async (_, { id }, { dataSources }) => dataSources.thingAPI.getThingById({ thingId: id }),
   },
   Mutation: {
-    login: async () => process.env.ACCESS_TOKEN || 'missing_token',
+    login: async (_, { code }, { dataSources }) => dataSources.authAPI.getAccessToken(code),
   },
 };
 
